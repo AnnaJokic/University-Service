@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Izmena grupe</title>
+    </head>
+    <body>
+        <form action="{{oznaka_grupe}}" method="post">
+            {% csrf_token %}
+            <label>Izaberite semestar:</label>
+            <br>
+             <select name="tip_semestra">
+                 {%if grupa_za_izmenu.oznaka_semestra == 1%}
+                    <option value="1" selected>1</option>
+                 {%else%}
+                    <option value="1">1</option>
+                 {%endif%}
+                  {%if grupa_za_izmenu.oznaka_semestra == 2%}
+                    <option value="2" selected>2</option>
+                 {%else%}
+                    <option value="2">2</option>
+                 {%endif%}
+                  {%if grupa_za_izmenu.oznaka_semestra == 3%}
+                    <option value="3" selected>3</option>
+                 {%else%}
+                    <option value="3">3</option>
+                 {%endif%}
+                  {%if grupa_za_izmenu.oznaka_semestra == 4%}
+                    <option value="4" selected>4</option>
+                 {%else%}
+                    <option value="4">4</option>
+                 {%endif%}
+                  {%if grupa_za_izmenu.oznaka_semestra == 5%}
+                    <option value="5" selected>5</option>
+                 {%else%}
+                    <option value="5">5</option>
+                 {%endif%}
+                  {%if grupa_za_izmenu.oznaka_semestra == 6%}
+                    <option value="6" selected>6</option>
+                 {%else%}
+                    <option value="6">6</option>
+                 {%endif%}
+                  {%if grupa_za_izmenu.oznaka_semestra == 7%}
+                    <option value="7" selected>7</option>
+                 {%else%}
+                    <option value="7">7</option>
+                 {%endif%}
+                  {%if grupa_za_izmenu.oznaka_semestra == 8%}
+                    <option value="8" selected>8</option>
+                 {%else%}
+                    <option value="8">8</option>
+                 {%endif%}
+            </select>
+            <br>
+             <label>Izaberite skolsku godinu:</label>
+            <input type="text" name="pocetna_godina" value="{{grupa_za_izmenu.za_semestar.skolska_godina_pocetak}}"> /
+            <input type="text" name="zavrsna_godina" value="{{grupa_za_izmenu.za_semestar.skolska_godina_kraj}}">
+            <br>
+            <hr>
+            <label>Naziv grupe</label>
+            <label>{{grupa_za_izmenu.oznaka_grupe}}</label>
+            <br>
+            <label>Predmeti:</label>
+            <br>
+            {% for subject in subjects %}
+                 {% if subject in grupa_za_izmenu.predmeti.all%}
+
+                            <input type="checkbox" name="subject" value="{{subject}}" checked>{{subject}}
+                            <br>
+                 {% else %}
+                            <input type="checkbox" name="subject" value="{{subject}}">{{subject}}
+                            <br>
+                 {%endif%}
+
+            {% endfor %}
+            <br>
+            <label>Kapacitet:</label>
+            <input type="number" name="kapacitet" value="{{grupa_za_izmenu.kapacitet}}">
+            <br>
+            <label>Smer:</label>
+            <select name="smer">
+                {%if grupa_za_izmenu.smer == 'RN'%}
+                    <option value="RN" selected>RN</option>
+                    <option value="RM">RM</option>
+                {%else%}
+                    <option value="RN">RN</option>
+                    <option value="RM" selected>RM</option>
+                {%endif%}
+            </select>
+            <br>
+            <label>Aktivna:</label>
+            {%if grupa_za_izmenu.aktivna == 1%}
+                     <input type="radio" name="aktivna" value="Da" checked>Da
+                     <input type="radio" name="aktivna" value="Ne">Ne
+                {%else%}
+                    <input type="radio" name="aktivna" value="Da">Da
+                    <input type="radio" name="aktivna" value="Ne" checked>Ne
+                {%endif%}
+
+            <input type="submit" value="Sacuvaj">
+        </form>
+    </body>
+</html>

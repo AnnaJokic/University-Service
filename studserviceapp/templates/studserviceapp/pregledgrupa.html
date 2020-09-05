@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prikaz izabranih grupa</title>
+</head>
+<body>
+
+    {% for g in grupe %}
+
+        <a href="/studserviceapp/detaljigrupe/{{g}}">{{g}}</a>
+        <br>
+
+    {% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+    <title>Podaci o studentu</title>
+</head>
+<body>
+        <label>Ime:</label>
+        <label>{{student.ime}}</label>&nbsp
+        <label>Prezime:</label>
+        <label>{{student.prezime}}</label><br>
+        <label>Indeks:</label>
+        <label>{{student.smer}}</label>
+        <label>{{student.broj_indeksa}}</label>&nbsp/
+        <label>{{student.godina_upisa}}</label><br>
+        <label>Grupa:</label>
+        {% for grupa in grupe%}
+            {{ grupa.oznaka_grupe }}
+        {% endfor %}
+
+        <form action="{{student.nalog.username}}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="image"><br>
+            <input type="submit">
+        </form>
+</body>
+</html>

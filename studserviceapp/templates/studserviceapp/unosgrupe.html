@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+{% if predmeti %}
+<head>
+    <meta charset="UTF-8">
+    <title>Kreiranje grupe</title>
+</head>
+<body>
+    <form method="post">
+    {% csrf_token %}
+        <div align="center">
+            <label>Izaberite semestar: </label>
+
+                        <input type="radio" name="semestar" value="1" id="1"  onchange="getPredmeti({{ json }}, 1)">1
+                        <input type="radio" name="semestar" value="2" id="2"  onchange="getPredmeti({{ json }}, 2)">2
+                        <input type="radio" name="semestar" value="3" id="3"  onchange="getPredmeti({{ json }}, 3)">3
+                        <input type="radio" name="semestar" value="4" id="4"  onchange="getPredmeti({{ json }}, 4)">4
+                        <input type="radio" name="semestar" value="5" id="5"  onchange="getPredmeti({{ json }}, 5)">5
+                        <input type="radio" name="semestar" value="6" id="6"  onchange="getPredmeti({{ json }}, 6)">6
+                        <input type="radio" name="semestar" value="7" id="7"  onchange="getPredmeti({{ json }}, 7)">7
+                        <input type="radio" name="semestar" value="8" id="8"  onchange="getPredmeti({{ json }}, 8)">8
+
+        </div>
+        <br>
+        <div align="center">
+            <input type="text" placeholder="Godina pocetka" id="poc-godina" name="poc-godina">
+            <label>/</label>
+            <input type="text" placeholder="Godina zavrsetka" id="kraj-godina" name="kraj-godina">
+
+            <br><br>
+            <input type="text" placeholder="Naziv grupe" id="naziv" name="naziv">
+
+            <br><br>
+            <input type="text" placeholder="Kapacitet" id="kapacitet" name="kapacitet">
+
+            <br><br>
+            <select id="smer" name="smer">
+                <option>RN</option>
+                <option>RM</option>
+                <option>RD</option>
+            </select>
+
+            <br><br>
+            <label>Aktivna: </label>
+            <input type="radio" name="aktivnost" id="aktivna" value="da"> Da
+            <input type="radio" name="aktivnost" id="neaktivna" value="ne" checked="checked"> Ne
+
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div align="center">
+            <label>Predmeti:</label>
+        </div>
+        <br>
+        <div align="center" id="predmet" name="predmet">
+
+        </div>
+        <hr>
+        <br>
+        <div align="center">
+            <input type="submit" value="Sacuvaj">
+        </div>
+    </form>
+</body>
+
+{% else %}
+        <p>Nema predmeta u bazi</p>
+{% endif %}
+<script>
+    function getPredmeti(predmeti, semestar) {
+
+        let cell = document.getElementById("predmet");
+        while (cell.firstChild) {
+            cell.removeChild(cell.firstChild);
+        }
+
+        let g;
+        let empty = true;
+        let newEl;
+        for (let i = 0; i < predmeti.length; ++i) {
+            g = predmeti[i];
+
+            if (g.fields["semestar_po_programu"]===semestar) {
+
+                newEl = document.createElement('input');
+                newEl.setAttribute("type", "checkbox");
+                newEl.setAttribute("name", "biraj");
+                newEl.setAttribute("value", g.fields["naziv"]);
+                cell.appendChild(newEl);
+
+                newEl = document.createElement('label');
+                newEl.innerText = g.fields["naziv"];
+                cell.appendChild(newEl);
+
+                empty = false;
+
+                }
+
+        }
+
+        if (empty) {
+            cell.innerText = "Nema predmeta.";
+        }
+
+    }
+</script>
+
+</html>

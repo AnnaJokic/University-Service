@@ -1,0 +1,31 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Maillist</title>
+</head>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <br>
+        <h2>{{prezime}}</h2>
+        <br><br>
+        <input type="text" id="from" name="from" value="{{ mejlovi }}" >
+        <br><br>
+        <input type="text" id="subject" name="subject" placeholder="Subject" >
+        <br><br>
+        <textarea id="text_area" name="text_area" placeholder="Message" rows="20" cols="80" required></textarea>
+        <br><br>
+        <input type="file" id="attachment" name="attachment">
+        <br><br>
+
+         <h2>Send to:</h2>
+        <select id="checkbox" name="checkbox">
+            {% for za in za_slanje %}
+                <option value={{ za }}>{{ za }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="text" id="specific" name="specific" value="{{ email }}" >
+        <br><br><input type="submit" value="Posalji" name="posalji" >
+    </form>
+</body>
+</html>

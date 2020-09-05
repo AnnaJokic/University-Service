@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+ {% for s in studenti %}
+
+    {% if s.slika == None %}
+        {{s.ime}}&nbsp{{s.prezime}}<br>
+
+    {% else %}
+         <a href="slika/{{ s.nalog.username }}">{{s.ime}}&nbsp{{s.prezime}}</a><br>
+
+    {% endif %}
+ {% endfor %}
+</body>
+</html>

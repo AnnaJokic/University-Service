@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+<title>Unos kolokvijuma</title>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit" value="Unesi"/>
+    </form>
+</body>
+</html>

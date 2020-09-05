@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+{% if nalog.uloga == "sekretar" %}
+
+    {%for g in recnik%}
+        <a href="detalji/{{ g }}">{{g}}</a><br>
+    {%endfor%}
+
+{% elif nalog.uloga == "administrator" %}
+    {%for g in recnik%}
+        <a href="detalji/{{ g }}">{{g}}</a><br>
+    {%endfor%}
+
+{% else %}
+ {% for predmet, grupe in recnik.items %}
+                {{predmet}}<br>
+
+                {% for g in grupe %}
+                    <a href="detalji/{{ g }}">{{g}}</a><br>
+                {% endfor %}
+                <br>
+    {% endfor %}
+{%endif%}
+</body>
+</html>

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    {% for s in studenti %}
+
+        {{s.ime}}&nbsp{{s.prezime}}&nbsp{{s.smer}} {{s.broj_indeksa}}/{{s.godina_upisa}}
+        <br>
+    {% endfor %}
+</body>
+</html>

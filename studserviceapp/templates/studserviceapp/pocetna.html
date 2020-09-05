@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script>
+  const filter = (event) => {
+    const filter_text = event.value.toUpperCase();
+    const raspored_div = document.getElementById("raspored-admin");
+    const table = raspored_div.getElementsByTagName("table")[0];
+    const trs = table.getElementsByTagName("tr");
+    const tr_len = trs.length;
+    var td;
+    var i;
+
+    for(i = 0; i < tr_len; i++){
+      td_ime = trs[i].getElementsByTagName("td")[1];
+      td_prezime = trs[i].getElementsByTagName("td")[2];
+
+      if(td_ime && td_prezime){
+        var ime = td_ime.textContent || td_ime.innerText;
+        var prezime = td_prezime.textContent || td_prezime.innerText;
+
+        var ime_prezime = ime + " " + prezime;
+
+        if(ime_prezime.toUpperCase().indexOf(filter_text) > -1){
+          trs[i].style.display = "";
+        }else{
+          trs[i].style.display = "none";
+        }
+      }
+    }
+}
+</script>
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+</style>
+<body>
+
+{% if nalog.uloga == "Nastavnik" %}
+
+
+<div class="w3-top">
+  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="pocetna/{{nalog.username}}" class="w3-bar-item w3-button w3-padding-large w3-white">Pocetna stranica nastavnika</a>
+    <a href="{% url 'grupeprofesora' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pregled studenata po grupama</a>
+    <a href="{% url 'maillist' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slanje mail-a</a>
+
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="{% url 'grupeprofesora' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Pregled studenata po grupama</a>
+    <a href="{% url 'maillist' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Slanje mail-a </a>
+  </div>
+</div>
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+        <input type="text" id="search"  name="search" value="">
+
+<br>
+<br>
+<div>
+{% load django_tables2 %}
+{% render_table table2 %}
+</div>
+
+
+<br>
+<br>
+<br>
+
+<div>
+{% load django_tables2 %}
+{% render_table table %}
+</div>
+
+
+{% elif nalog.uloga == "student" %}
+<div class="w3-top">
+  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction2()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Pocetna stranica studenta</a>
+    <a href="{% url 'detalji_studenta' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Upload slike</a>
+    <a href="{% url 'izbor_grupe' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Izbor grupe</a>
+
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo2" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="{% url 'detalji_studenta' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Upload slike</a>
+    <a href="{% url 'izbor_grupe' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Izbor grupe </a>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div>
+{% load django_tables2 %}
+{% render_table table2 %}
+</div>
+
+<br>
+<br>
+<br>
+
+<div>
+{% load django_tables2 %}
+{% render_table table %}
+</div>
+
+{% elif nalog.uloga == "sekretar" %}
+<div class="w3-top">
+  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction3()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Pocetna stranica sekretara</a>
+    <a href="{% url 'unosobavestenja' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Unos obavestenja</a>
+      <a href="{% url 'maillist' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slanje mail-a</a>
+      <a href="{% url 'pregled_grupa'%}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pregled izabranih grupa</a>
+    <a href="{% url 'grupeprofesora' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pregled studenata</a>
+
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo3" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="{% url 'unosobavestenja' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Unos obavestenja</a>
+    <a href="{% url 'maillist' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Slanje mail-a </a>
+          <a href="{% url 'pregled_grupa'%}" class="w3-bar-item w3-button w3-padding-large">Pregled izabranih grupa </a>
+      <a href="{% url 'grupeprofesora' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Pregled studenata </a>
+
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div>
+{% load django_tables2 %}
+{% render_table table2 %}
+</div>
+
+<br>
+<br>
+<br>
+
+<div>
+{% load django_tables2 %}
+{% render_table table %}
+</div>
+{% elif nalog.uloga == "administrator" %}
+    <div class="w3-top">
+  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction4()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Pocetna stranica administratora</a>
+    <a href="{% url 'unoskolokvijuma' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Upload rasporeda</a>
+    <a href="{% url 'unosobavestenja' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Unos obavestenja</a>
+          <a href="{% url 'maillist' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Slanje mail-a</a>
+          <a href="{% url 'napravi_grupu' %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Unos izborne grupe</a>
+          <a href="{% url 'pregled_grupa'%}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pregled izbranih grupa</a>
+          <a href="{% url 'grupeprofesora' nalog.username %}" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">Pregled studenata</a>
+
+
+  </div>
+
+  <!-- Navbar on small screens -->
+  <div id="navDemo4" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium w3-large">
+    <a href="{% url 'unoskolokvijuma' %}" class="w3-bar-item w3-button w3-padding-large">Upload rasporeda</a>
+    <a href="{% url 'unosobavestenja' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Unos obavestenja</a>
+          <a href="{% url 'maillist' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Slanje mail-a </a>
+    <a href="{% url 'napravi_grupu' %}" class="w3-bar-item w3-button w3-padding-large">Unos izbornih grupa</a>
+    <a href="{% url 'pregled_grupa'%}" class="w3-bar-item w3-button w3-padding-large">Pregled izbranih grupa</a>
+    <a href="{% url 'grupeprofesora' nalog.username %}" class="w3-bar-item w3-button w3-padding-large">Pregled studenata </a>
+
+
+
+
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div>
+{% load django_tables2 %}
+{% render_table table2 %}
+</div>
+
+<br>
+<br>
+  <input type="text" placeholder="filter" oninput="filter(this);">
+
+<br>
+<br>
+<br>
+
+<div id="raspored-admin">
+{% load django_tables2 %}
+{% render_table table %}
+</div>
+
+
+
+{% endif %}
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+function myFunction2() {
+  var x = document.getElementById("navDemo2");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+function myFunction3() {
+  var x = document.getElementById("navDemo3");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+function myFunction4() {
+  var x = document.getElementById("navDemo4");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+</body>
+</html>

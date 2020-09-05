@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Obavestanje o gresci</title>
+</head>
+<body>
+    Sacuvani su samo validni termini!<br>
+    Mozete rucno ispraviti fajl i ponovo ga uneti klikom na dugme unesi.<br>
+    Mozete ispraviti fajl pomocu nase forme klikom na dugme ispravi.<br>
+
+    {%for greska in greske%}
+       {{greska}}<br>
+    {%endfor%}
+
+     <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+         <input type="submit" value="unesi" name="unesi"/>
+        <input type="submit" value="ispravi" name="ispravi"/>
+     </form>
+
+</body>
+</html>

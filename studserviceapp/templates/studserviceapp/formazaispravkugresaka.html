@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Obavestanje o gresci</title>
+</head>
+<body>
+      <form method="post" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+           <select id="select1" name="select1">
+
+              {% for o in oba %}
+
+               <option value={{o}}>{{o}}</option>
+
+            {% endfor %}
+
+        </select>
+
+
+        <br>
+
+        <br>
+
+        <br>
+        Predmet:
+        <br>
+        <br>
+          <input type="text" id="predmeti" name="predmeti" value="">
+
+
+
+        <br>
+
+        <br>
+        Ime i prezime nastavnika: <br>
+        <br>
+          <input type="text" id="izaberi_profu" value="" name="izaberi_profu">
+
+
+
+        <br>
+
+        <br>
+        Ucionice: ( " 1,3,5 ")        <br>
+         <input type="text" id="ucionice"  name="ucionice">
+
+
+
+        <br>
+
+        <br>
+        Vreme: ( " 09-12 " ) <br>
+        <input type="text" id="vreme"  name="vreme" value="">
+
+        <br>
+
+        <br>
+        Dan: ( "Subota, Ponedeljak" ) <br> <input name="dan" type="text" id="dan" value="">
+
+        <br>
+
+        <br>
+        Datum: ( " 17.11. " ) <br> <input type="text" name="datum" id="datum" value="">
+
+
+
+
+
+               <input type="submit" value="sacuvaj" name="sacuvaj">
+
+         </form>
+
+</body>
+</html>

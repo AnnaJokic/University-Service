@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Izbor grupe</title>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <div align="center">
+            <style type="text/css">
+                .lb {font-family:Arial, sans-serif;font-size: 24px;}
+            </style>
+            <label class="lb">Izaberite grupu</label>
+            <br><br>
+        </div>
+        <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;border-width: 2px;border-color: black;}
+        .tg td{font-family:Arial, sans-serif;font-size:12px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:black;}
+        .tg th{font-family:Arial, sans-serif;font-size:12px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:2px;overflow:hidden;word-break:normal;border-color:black;background: lightgray;}
+        .tg .tg-0lax{text-align:left;vertical-align:top}
+        </style>
+        <table class="tg" align="center">
+            <tr>
+                <td>Indeks</td>
+                <td>
+                    <select id="izbor-smera">
+                        <option id="smer-studenta">{{ student.smer }}</option>
+                        <option id="smer-rn">RN</option>
+                        <option id="smer-rm">RM</option>
+                        <option id="smer-rd">RD</option>
+                    </select>
+                    <input type="text" id="unos-indeksa" value="{{ student.broj_indeksa }}">
+                    <input type="text" id="unos-godine" value="{{ student.godina_upisa }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Ime</td>
+                <td>
+                    <input type="text" id="unos-imena" value="{{ student.ime }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Prezime</td>
+                <td>
+                    <input type="text" id="unos-prezimena" value="{{ student.prezime }}">
+                </td>
+            </tr>
+            <tr>
+                <td>Broj do sada ukupno ostvarenih ESPB</td>
+                <td>
+                    <input type="text" name="osvojeni_espb" id="unos-total-espb">
+                </td>
+            </tr>
+            <tr>
+                <td id="skolska-god">Skolske {{semestar.skolska_godina_pocetak}}/{{semestar.skolska_godina_kraj}} godine upisujem ESPB:</td>
+                <td>
+                    <input type="text" name="upisujem_espb" id="unos-tren-espb">
+                </td>
+            </tr>
+            <tr>
+                <td>Broj do sada polozenih ispita</td>
+                <td>
+                    <input type="text" name="broj_polozenih" id="unos-polozenih">
+                </td>
+            </tr>
+            <tr>
+                <td>Semestar</td>
+                <td>
+                    {%if semestar.vrsta == 'parni'%}
+                        <input type="radio" name="semestar" value="2" id="2">2
+                        <input type="radio" name="semestar" value="4" id="4">4
+                        <input type="radio" name="semestar" value="6" id="6">6
+                        <input type="radio" name="semestar" value="8" id="8">8
+                    {%else%}
+                        <input type="radio" name="semestar" value="1" id="1"  onchange="getGrupe({{ json }}, 1)">1
+                        <input type="radio" name="semestar" value="3" id="3"  onchange="getGrupe({{ json }}, 3)">3
+                        <input type="radio" name="semestar" value="5" id="5"  onchange="getGrupe({{ json }}, 5)">5
+                        <input type="radio" name="semestar" value="7" id="7"  onchange="getGrupe({{ json }}, 7)">7
+                    {%endif%}
+                </td>
+            </tr>
+            <tr>
+                <td>Prvi put upisuje semestar</td>
+                <td>
+                    <input type="radio" value="da" name="upis">Da
+                    <input type="radio" value="ne" name="upis">Ne
+                </td>
+            </tr>
+            <tr>
+                <td>Izaberite grupu</td>
+                <td id="izbor-grupe"></td>
+            </tr>
+        <tr>
+            <td>Nepolozeni predmeti iz prethodnih godina</td>
+            <td>
+
+                {% for p in predmeti %}
+                    <input type="checkbox" name="predmet" value="{{p}}">{{p.naziv}}
+                    <br>
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Nacin placanja skolarine</td>
+            <td>
+                <input type="radio" name="placanje" value="odjednom">Odjednom
+                <input type="radio" name="placanje" value="rate">Na rate
+                <input type="radio" name="placanje" value="stipendistad">Stipendija
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Sacuvaj">
+            </td>
+        </tr>
+        </table>
+    </form>
+</body>
+
+<script>
+
+    function getGrupe(grupe, semestar) {
+
+        let cell = document.getElementById("izbor-grupe");
+        while (cell.firstChild) {
+            cell.removeChild(cell.firstChild);
+        }
+
+        let g;
+        let empty = true;
+        let newEl;
+        for (let i = 0; i < grupe.length; ++i) {
+            g = grupe[i];
+            if (g["oznaka_semestra"] === semestar) {
+                newEl = document.createElement('input');
+                newEl.setAttribute("type", "radio");
+                newEl.setAttribute("name", "biraj");
+                newEl.setAttribute("value", g["oznaka_grupe"]);
+                cell.appendChild(newEl);
+
+                newEl = document.createElement('label');
+                newEl.innerText = g["oznaka_grupe"];
+                cell.appendChild(newEl);
+
+                empty = false;
+            }
+        }
+
+        if (empty) {
+            cell.innerText = "Nema izbornih grupa.";
+        }
+
+    }
+</script>
+
+</html>
